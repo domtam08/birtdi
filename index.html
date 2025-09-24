@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Happy Birthday Chieby Mainit!</title>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+  body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background: linear-gradient(135deg, #013220, #000000);
+    font-family: 'Roboto', sans-serif;
+    color: #c8e6c9;
+    overflow-x: hidden;
+  }
+  #infoBtn {
+    position: fixed;
+    top: 15px;
+    right: 20px;
+    background-color: #004d40;
+    border: none;
+    padding: 10px 20px;
+    color: #a5d6a7;
+    font-weight: 700;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    z-index: 100;
+    box-shadow: 0 0 10px #004d40;
+    transition: background-color 0.3s ease;
+  }
+  #infoBtn:hover {
+    background-color: #00796b;
+    color: #e0f2f1;
+  }
+  #infoOverlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(0,0,0,0.75);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 110;
+  }
+  #infoPopup {
+    background-color: #004d40;
+    padding: 30px 40px;
+    border-radius: 12px;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 0 20px #00796b;
+    position: relative;
+    color: #c8e6c9;
+  }
+  #infoPopup h2 {
+    font-family: 'Pacifico', cursive;
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 28px;
+  }
+  #infoPopup p {
+    font-size: 16px;
+    line-height: 1.4;
+    color: #a5d6a7;
+    white-space: pre-wrap;
+  }
+  #infoPopup button.closeInfoBtn {
+    background-color: #00796b;
+    border: none;
+    color: #e0f2f1;
+    padding: 10px 18px;
+    font-weight: 700;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 15px;
+    float: right;
+    transition: background-color 0.3s ease;
+  }
+  #infoPopup button.closeInfoBtn:hover {
+    background-color: #004d40;
+  }
+  /* Birthday Popup */
+  .popup {
+    background-color: #004d40;
+    padding: 50px 60px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0px 10px 40px rgba(0, 0, 0, 0.7);
+    font-family: 'Pacifico', cursive;
+    display: none;
+    transform: scale(0);
+    animation: popupAnimation 1s ease-out forwards;
+    z-index: 10;
+    position: relative;
+    color: #a5d6a7;
+  }
+  @keyframes popupAnimation {
+    from {
+        opacity: 0;
+        transform: scale(0);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+  }
+  .popup h1 {
+    color: #80cbc4;
+    font-size: 60px;
+    margin-bottom: 20px;
+    animation: bounceIn 1s ease-in-out;
+  }
+  @keyframes bounceIn {
+    0% { transform: translateY(-2000px); }
+    60% { transform: translateY(30px); }
+    100% { transform: translateY(0); }
+  }
+  .popup p {
+    color: #c8e6c9;
+    font-size: 24px;
+    margin-bottom: 30px;
+    letter-spacing: 1px;
+    opacity: 0;
+    animation: fadeIn 2s ease-in-out forwards;
+  }
+  @keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  .popup button {
+    background-color: #00796b;
+    color: #e0f2f1;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 10px;
+    font-size: 22px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  .popup button:hover {
+    background-color: #004d40;
+    transform: scale(1.1);
+  }
+  /* Confetti */
+  .confetti {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 5;
+    opacity: 0;
+    animation: showConfetti 1s ease-out forwards;
+  }
+  @keyframes showConfetti {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  .confetti div {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: #80cbc4;
+    animation: confettiAnimation 1s ease-out infinite;
+  }
+  @keyframes confettiAnimation {
+    0% { opacity: 1; transform: translateY(-1000px) rotate(0); }
+    100% { opacity: 0; transform: translateY(1000px) rotate(360deg); }
+  }
+  /* After Popup Content */
+  #afterPopupContent {
+    display: none;
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 600px;
+    margin: 40px auto 20px auto;
+    text-align: center;
+    padding-top: 1px;
+    animation: fadeIn 1s ease-in-out;
+    color: #a5d6a7;
+  }
+  #afterPopupContent h2 {
+    font-size: 40px;
+    color: #80cbc4;
+    font-family: 'Pacifico', cursive;
+    margin-bottom: 20px;
+  }
+  #afterPopupContent p {
+    font-size: 20px;
+    color: #c8e6c9;
+    font-family: 'Roboto', sans-serif;
+    margin-top: 0;
+  }
+  /* Slider */
+  #imageSlider {
+    position: relative;
+    max-width: 500px;
+    max-height: 500px;
+    margin: 0 auto;
+    padding: 0 50px;
+  }
+  .slider-image:nth-child(3) {
+    max-height: 500px;
+  }
+  .slider-image, .slider-video {
+    width: 100%;
+    height: auto;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.7);
+    display: none;
+    object-fit: contain;
+  }
+  .slider-image.active, .slider-video.active {
+    display: block;
+  }
+  #prevBtn, #nextBtn {
+    position: absolute;
+    top: 50%;
+    background-color: transparent;
+    border: none;
+    color: #80cbc4;
+    padding: 10px 15px;
+    font-size: 28px;
+    cursor: pointer;
+    user-select: none;
+    transform: translateY(-50%);
+    border-radius: 0px;
+    z-index: 10;
+    width: 40px;
+    height: 40px;
+    transition: color 0.3s ease;
+  }
+  #prevBtn:hover, #nextBtn:hover {
+    color: #a5d6a7;
+  }
+  #prevBtn {
+    left: 0;
+    border-radius: 10px 0 0 10px;
+  }
+  #nextBtn {
+    right: 0;
+    border-radius: 0 10px 10px 0;
+  }
+  .slider-video video {
+    width: 100%;
+    max-height: 500px;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.7);
+  }
+  #slideText {
+    margin-top: 15px;
+    font-size: 18px;
+    color: #b2dfdb;
+    min-height: 40px;
+    font-family: 'Roboto', sans-serif;
+  }
+</style>
+</head>
+<body>
+
+<button id="infoBtn">Info</button>
+
+<!-- Info Popup -->
+<div id="infoOverlay">
+  <div id="infoPopup">
+    <h2>Info</h2>
+    <p>This is Chieby Mainit's birthday.
+You are invited to her debut in September 28, 2025 at New Town Estate Clubhouse in Pardo, Cebu City.
+Starting at 6pm.
+
+grabe kapoya abtan nakog kadlawn binuhat ani da</p>
+    <button class="closeInfoBtn" id="closeInfoBtn">Close</button>
+  </div>
+</div>
+
+<!-- Birthday Popup -->
+<div class="popup" id="birthdayPopup">
+  <h1>🎉 Happy Birthday Chiebsss!! 🎉</h1>
+  <p>May your day be filled with laughter, love, and all things that bring you joy!</p>
+  <button onclick="closePopup()">Close</button>
+</div>
+
+<div class="confetti" id="confettiContainer"></div>
+
+<div id="afterPopupContent">
+  <h2>🌟 PIBIRTDI!! 🌟</h2>
+
+  <div id="imageSlider">
+    <img src="https://cdn-images.dzcdn.net/images/cover/e23c61c14db46a8f2490ab147600ff17/1900x1900-000000-81-0-0.jpg" alt="Birthday Image 1" class="slider-image active" />
+    <img src="https://i.postimg.cc/XJctHqMZ/c89ac602-95f6-43ea-9b3e-219d040ae0b9.jpg" alt="Birthday Image 2" class="slider-image" />
+    <img src="https://i.postimg.cc/sD0q0bLJ/af5410e1-4a32-4956-8c1c-7596bfc0fdce.jpg" alt="Birthday Image 3" class="slider-image" />
+    <img src="https://i.imgur.com/Skc7D9v.jpeg" alt="Birthday Image 4" class="slider-image" />
+    <img src="https://i.imgur.com/JR8m0c3.jpeg" alt="Birthday Image 5" class="slider-image" />
+    <div class="slider-video">
+      <video controls>
+        <source src="https://i.imgur.com/PT2uYZe.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+    </div>
+
+    <button id="prevBtn">&lt;</button>
+    <button id="nextBtn">&gt;</button>
+  </div>
+
+  <div id="slideText">ASANG PAKALS CHIEBYYYYYY!!</div>
+</div>
+
+<script>
+  window.onload = function() {
+    setTimeout(() => {
+      const popup = document.getElementById("birthdayPopup");
+      popup.style.display = "block";
+      popup.style.transform = "scale(1)";
+      createConfetti();
+    }, 1000);
+  };
+
+  function closePopup() {
+    const popup = document.getElementById("birthdayPopup");
+    popup.style.transform = "scale(0)";
+    setTimeout(() => {
+      popup.style.display = "none";
+      document.getElementById("afterPopupContent").style.display = "block";
+      document.body.style.overflow = "auto";
+      updateSlideText();
+    }, 500);
+  }
+
+  function createConfetti() {
+    const confettiContainer = document.getElementById("confettiContainer");
+    const numConfetti = 100;
+    for (let i = 0; i < numConfetti; i++) {
+      const confettiPiece = document.createElement("div");
+      confettiPiece.style.left = `${Math.random() * 100}vw`;
+      confettiPiece.style.animationDuration = `${Math.random() * 2 + 2}s`;
+      confettiPiece.style.animationDelay = `${Math.random() * 2}s`;
+      confettiContainer.appendChild(confettiPiece);
+    }
+    setTimeout(() => {
+      confettiContainer.style.opacity = 1;
+    }, 1000);
+  }
+
+  const slides = document.querySelectorAll('.slider-image, .slider-video');
+  const slideTexts = [
+    "ASANG PAKALS CHIEBYYYYYY!!",
+    "AYIEE AIYEIEE 😳🤭",
+    "kinsay gakulata ninyo gois?",
+    "unsa maning nawnga ey",
+    "after pictorial daw nila HAAHAHAH",
+    "Watch this video for the birthday vibes!"
+  ];
+  let currentIndex = 0;
+  const slideTextDiv = document.getElementById("slideText");
+
+  function updateSlideText() {
+    slideTextDiv.textContent = slideTexts[currentIndex] || "";
+  }
+
+  document.getElementById('prevBtn').addEventListener('click', () => {
+    slides[currentIndex].classList.remove('active');
+    currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+    slides[currentIndex].classList.add('active');
+    updateSlideText();
+  });
+
+  document.getElementById('nextBtn').addEventListener('click', () => {
+    slides[currentIndex].classList.remove('active');
+    currentIndex = (currentIndex + 1) % slides.length;
+    slides[currentIndex].classList.add('active');
+    updateSlideText();
+  });
+
+  const infoBtn = document.getElementById("infoBtn");
+  const infoOverlay = document.getElementById("infoOverlay");
+  const closeInfoBtn = document.getElementById("closeInfoBtn");
+
+  infoBtn.addEventListener("click", () => {
+    infoOverlay.style.display = "flex";
+  });
+
+  closeInfoBtn.addEventListener("click", () => {
+    infoOverlay.style.display = "none";
+  });
+
+  infoOverlay.addEventListener("click", (e) => {
+    if(e.target === infoOverlay) {
+      infoOverlay.style.display = "none";
+    }
+  });
+</script>
+
+</body>
+</html>
